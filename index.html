@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TransPerfect World Cup 2026 Sweepstake</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  :root{--pitch-green:#0B3D24;--chalk:#F5F1E6;--gold:#D8A33D;--gold-bright:#F0C25E;--ink:#0C1A12;--line:rgba(245,241,230,0.14);--you-glow:rgba(216,163,61,0.16);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at top,#134024 0%,var(--pitch-green) 45%,#082A18 100%);color:var(--chalk);font-family:'Space Grotesk',sans-serif;min-height:100vh;padding:0 0 4rem 0;}
+  body::before{content:"";position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(245,241,230,0.025) 79px,rgba(245,241,230,0.025) 80px);pointer-events:none;z-index:0;}
+  .wrap{position:relative;z-index:1;max-width:1020px;margin:0 auto;padding:0 1.25rem;}
+  header{padding:2.5rem 1.25rem 2rem;text-align:center;border-bottom:1px solid var(--line);}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-bright);margin-bottom:0.7rem;}
+  h1{font-family:'Archivo Black',sans-serif;font-size:clamp(1.8rem,5.5vw,3.2rem);line-height:1;letter-spacing:-0.01em;text-transform:uppercase;}
+  h1 .accent{color:var(--gold-bright);}
+  .sub{font-size:0.88rem;color:rgba(245,241,230,0.55);margin-top:0.8rem;max-width:560px;margin-left:auto;margin-right:auto;}
+  .status{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:rgba(245,241,230,0.5);}
+  .dot{width:7px;height:7px;border-radius:50%;background:#5FAE6E;box-shadow:0 0 8px #5FAE6E;}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);}
+  .stat{padding:1.2rem 0.5rem;text-align:center;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat-num{font-family:'Archivo Black',sans-serif;font-size:clamp(1.3rem,3.5vw,1.9rem);color:var(--gold-bright);}
+  .stat-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,241,230,0.45);margin-top:0.25rem;}
+  .tabs{display:flex;flex-wrap:wrap;gap:0;margin:1.8rem 0 1.2rem;border:1px solid var(--line);border-radius:8px;overflow:hidden;width:fit-content;}
+  .tab{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.07em;text-transform:uppercase;padding:0.6rem 1rem;background:transparent;color:rgba(245,241,230,0.5);border:none;cursor:pointer;border-right:1px solid var(--line);white-space:nowrap;}
+  .tab:last-child{border-right:none;}
+  .tab.active{background:var(--gold);color:var(--ink);font-weight:700;}
+  .search{width:100%;background:rgba(245,241,230,0.06);border:1px solid var(--line);border-radius:8px;padding:0.65rem 1rem;color:var(--chalk);font-family:'Space Grotesk',sans-serif;font-size:0.88rem;margin-bottom:1.2rem;}
+  .search::placeholder{color:rgba(245,241,230,0.35);}
+  .search:focus{outline:none;border-color:var(--gold);}
+  .row{display:grid;grid-template-columns:44px 1fr auto;gap:0.8rem;align-items:center;padding:0.8rem 0.9rem;border-bottom:1px solid var(--line);border-radius:6px;}
+  .row.you{background:var(--you-glow);border:1px solid rgba(216,163,61,0.4);margin:0.12rem 0;}
+  .row-rank{font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:rgba(245,241,230,0.4);text-align:center;}
+  .medal{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Archivo Black',sans-serif;font-size:0.8rem;color:var(--ink);margin:0 auto;}
+  .medal.gold{background:linear-gradient(145deg,#F0C25E,#C68A1F);}
+  .medal.silver{background:linear-gradient(145deg,#E4E1D6,#A9A593);}
+  .medal.bronze{background:linear-gradient(145deg,#D78A5C,#9C5430);}
+  .medal.last{background:rgba(245,241,230,0.1);color:rgba(245,241,230,0.55);}
+  .row-name{font-weight:600;font-size:0.92rem;}
+  .you-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--gold-bright);background:rgba(216,163,61,0.15);padding:0.1rem 0.38rem;border-radius:4px;margin-left:0.35rem;}
+  .row-teams{font-size:0.73rem;color:rgba(245,241,230,0.45);margin-top:0.18rem;}
+  .row-pts{font-family:'Archivo Black',sans-serif;font-size:1.25rem;color:var(--gold-bright);text-align:right;}
+  .row-pts-label{font-family:'JetBrains Mono',monospace;font-size:0.56rem;color:rgba(245,241,230,0.3);text-align:right;letter-spacing:0.1em;}
+  .lookup-row{display:grid;grid-template-columns:1.4fr repeat(4,1fr) 0.6fr;gap:0.4rem;align-items:center;padding:0.6rem 0.5rem;border-bottom:1px solid var(--line);font-size:0.8rem;}
+  .lookup-head{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,241,230,0.38);border-bottom:1px solid var(--line);padding-bottom:0.55rem;}
+  .badge{display:inline-block;padding:0.18rem 0.45rem;border-radius:20px;font-size:0.66rem;font-weight:600;}
+  .badge.title{background:rgba(216,163,61,0.18);color:var(--gold-bright);}
+  .badge.dark{background:rgba(95,174,110,0.18);color:#7FC98E;}
+  .badge.knockout{background:rgba(229,160,90,0.18);color:#E5A05A;}
+  .badge.holiday{background:rgba(209,75,61,0.16);color:#E08272;}
+  .lookup-pts{font-family:'JetBrains Mono',monospace;font-weight:700;text-align:right;color:var(--gold-bright);}
+  .match-card{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0.9rem;border-bottom:1px solid var(--line);}
+  .match-teams{font-weight:600;font-size:0.85rem;}
+  .match-meta{font-size:0.7rem;color:rgba(245,241,230,0.42);margin-top:0.12rem;}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:0.63rem;padding:0.12rem 0.42rem;border-radius:4px;margin-right:0.38rem;}
+  .pill.W{background:rgba(95,174,110,0.2);color:#7FC98E;}
+  .pill.D{background:rgba(216,163,61,0.2);color:var(--gold-bright);}
+  .pill.L{background:rgba(209,75,61,0.2);color:#E08272;}
+  .yc{color:#F2C230;}.rc{color:#D14B3D;}
+  .match-pts{font-family:'Archivo Black',sans-serif;font-size:0.95rem;color:var(--gold-bright);}
+  .awards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:0.5rem;}
+  .award-card{background:rgba(245,241,230,0.05);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.2rem;position:relative;overflow:hidden;}
+  .award-card::before{content:attr(data-emoji);position:absolute;right:0.8rem;top:0.6rem;font-size:1.6rem;opacity:0.25;}
+  .award-title{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-bright);margin-bottom:0.5rem;}
+  .award-winner{font-family:'Archivo Black',sans-serif;font-size:1.05rem;color:var(--chalk);line-height:1.1;}
+  .award-detail{font-size:0.75rem;color:rgba(245,241,230,0.5);margin-top:0.3rem;}
+  .award-stat{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--gold-bright);margin-top:0.4rem;font-weight:700;}
+  section{display:none;}
+  section.active{display:block;}
+  footer{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:rgba(245,241,230,0.3);letter-spacing:0.05em;}
+  @media(max-width:600px){.lookup-row{grid-template-columns:1.2fr repeat(2,1fr)}.lookup-row span:nth-child(4),.lookup-row span:nth-child(5){display:none}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}.awards-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="kicker">TransPerfect · World Cup 2026 · Office Sweepstake</div>
+  <h1>TransPerfect<br><span class="accent">World Cup Sweepstake</span></h1>
+  <p class="sub">10pts a win · 5pts a draw · 5pts per goal · 2pts per yellow · 5pts per red card. 66 players, four teams each. 1st: £150 · 2nd: £85 · 3rd: £45 · Last: £45</p>
+  <div class="status"><span class="dot"></span><span>Updated 29 June · R32 underway · 17 teams eliminated (shown in red)</span></div>
+</header>
+<div class="stats">
+  <div class="stat"><div class="stat-num">66</div><div class="stat-label">Players</div></div>
+  <div class="stat"><div class="stat-num" id="statMatches">—</div><div class="stat-label">Matches played</div></div>
+  <div class="stat"><div class="stat-num" id="statGoals">—</div><div class="stat-label">Goals scored</div></div>
+  <div class="stat"><div class="stat-num" id="statLeader">—</div><div class="stat-label">Current leader</div></div>
+</div>
+<div class="tabs">
+  <button class="tab active" data-tab="board">🏆 Leaderboard</button>
+  <button class="tab" data-tab="awards">🎖️ Fun stats</button>
+  <button class="tab" data-tab="lookup">🌍 Team lookup</button>
+  <button class="tab" data-tab="results">📋 Results log</button>
+</div>
+<section id="board" class="active">
+  <input class="search" id="searchBoard" placeholder="Search by name...">
+  <div id="boardList"></div>
+</section>
+<section id="awards">
+  <div class="awards-grid" id="awardsList"></div>
+</section>
+<section id="lookup">
+  <input class="search" id="searchLookup" placeholder="Search by name or team...">
+  <div class="lookup-row lookup-head">
+    <span>Name</span><span>Title fav</span><span>Dark horse</span><span>KO threat</span><span>On holiday</span><span style="text-align:right;">Pts</span>
+  </div>
+  <div id="lookupList"></div>
+</section>
+<section id="results">
+  <div id="resultsList"></div>
+</section>
+<footer>TransPerfect World Cup 2026 Sweepstake · Updated 29 June 2026 · All group stage results verified against official scoring spreadsheet</footer>
+</div>
+<script>
+const PLAYERS=[
+["Aaron Campbell",["Portugal","Japan","Canada","Tunisia"]],
+["Aisling Mitrovic",["France","Austria","Egypt","Saudi Arabia"]],
+["Ajay Shukal",["Argentina","Mexico","Sweden","Cabo Verde"]],
+["Alexandra Farrell Orpen",["Spain","Switzerland","Australia","Cabo Verde"]],
+["Al-Karim Makhani",["Netherlands","Senegal","Sweden","Uzbekistan"]],
+["Amanda Ryan",["Brazil","Mexico","Paraguay","Panama"]],
+["Angus Ulyate",["Netherlands","Mexico","Ghana","Congo DR"]],
+["Anisha Kaher",["Portugal","Mexico","Korea Republic","Panama"]],
+["Anna Fiedlerova",["Spain","Norway","Turkiye","Jordan"]],
+["Arvin Assili",["Spain","Austria","Ghana","Iraq"]],
+["Attila Ianosi",["Germany","Croatia","Bosnia and Herzegovina","Cabo Verde"]],
+["Billy Dalton",["Belgium","Japan","Australia","Jordan"]],
+["Calvin Dass",["Belgium","Japan","Czechia","Cabo Verde"]],
+["Casey Dianni",["Belgium","USA","Bosnia and Herzegovina","New Zealand"]],
+["Charlotte Broadhurst",["Spain","Switzerland","Turkiye","Haiti"]],
+["Chaya Simpson",["Netherlands","Senegal","Korea Republic","Saudi Arabia"]],
+["Christina Farah",["England","Senegal","Scotland","Haiti"]],
+["Craig Kelly",["Brazil","Switzerland","Egypt","Qatar"]],
+["Daniela Di Tunno",["Portugal","Ecuador","Canada","Congo DR"]],
+["David La",["Belgium","Austria","Canada","IR Iran"]],
+["Dhruv Sethi",["Germany","USA","Algeria","Cabo Verde"]],
+["Ella Small",["Belgium","Switzerland","Korea Republic","Haiti"]],
+["Emma Dugas",["England","Japan","Sweden","Panama"]],
+["Gareth Noble",["Netherlands","Morocco","Ghana","IR Iran"]],
+["Hannah Bailey",["England","Norway","Algeria","Haiti"]],
+["Hannah Kilpatrick",["Netherlands","Uruguay","Colombia","Panama"]],
+["Harry Davies",["Argentina","USA","Scotland","IR Iran"]],
+["Harry Ellis",["Portugal","Uruguay","Paraguay","Iraq"]],
+["Helen Morgan",["Belgium","Norway","Algeria","Jordan"]],
+["Henry Raley",["Brazil","Austria","Czechia","Saudi Arabia"]],
+["Ilja Turockin",["Netherlands","Norway","Egypt","IR Iran"]],
+["Iryna Siopko",["England","Ecuador","Australia","New Zealand"]],
+["Ivan Monleon",["Brazil","Austria","Paraguay","IR Iran"]],
+["Jacob Harris",["France","Ecuador","Turkiye","Uzbekistan"]],
+["James Scholte",["Netherlands","Austria","Bosnia and Herzegovina","Curacao"]],
+["Joanna Bilcliffe",["France","Switzerland","Turkiye","IR Iran"]],
+["Kate Gardiner",["France","Switzerland","Paraguay","Iraq"]],
+["Katherine Debbage",["Argentina","Uruguay","Turkiye","Iraq"]],
+["Kimberley Konsein",["Germany","USA","Czechia","IR Iran"]],
+["Lauren Beatty",["Netherlands","Japan","Australia","IR Iran"]],
+["Lynn Ferguson",["Brazil","Morocco","Scotland","Panama"]],
+["Manuel Binder",["Portugal","Morocco","Algeria","New Zealand"]],
+["Mary Hamlet",["Belgium","Morocco","Algeria","Qatar"]],
+["Matt Austen",["Argentina","Austria","Colombia","Cabo Verde"]],
+["Megan Connor",["Germany","Croatia","Korea Republic","Haiti"]],
+["Oliver Ortiz",["Belgium","Croatia","Algeria","Jordan"]],
+["Patsie Vandenberghe",["Belgium","Senegal","Cote d'Ivoire","Saudi Arabia"]],
+["Paul Phillips",["England","Ecuador","Korea Republic","South Africa"]],
+["Pauli Verheijden-Griffiths",["Argentina","Ecuador","Scotland","Jordan"]],
+["Reuben Miller",["Belgium","Japan","Bosnia and Herzegovina","Uzbekistan"]],
+["Rita Pombo",["Portugal","Japan","Colombia","IR Iran"]],
+["Robert Walsh",["England","Ecuador","Korea Republic","IR Iran"]],
+["Radostina Tsirkova",["France","Morocco","Egypt","Uzbekistan"]],
+["Sally Carro Goodwill",["Brazil","Mexico","Czechia","South Africa"]],
+["Sasha Toussaint",["England","Uruguay","Cote d'Ivoire","Cabo Verde"]],
+["Shalin Russell",["Belgium","Japan","Ghana","Curacao"]],
+["Shane Baker",["Brazil","Uruguay","Turkiye","Saudi Arabia"]],
+["Sophie Coker",["Germany","Uruguay","Paraguay","Saudi Arabia"]],
+["Thomas Aston",["Portugal","Senegal","Egypt","South Africa"]],
+["Thomas Dath",["Germany","Senegal","Ghana","South Africa"]],
+["Tom Parrish",["Spain","Croatia","Australia","Saudi Arabia"]],
+["Tyler Mickelson",["England","Morocco","Paraguay","Jordan"]],
+["Wei Weale",["France","Austria","Turkiye","Tunisia"]],
+["William MacDonald",["Portugal","Mexico","Cote d'Ivoire","Qatar"]],
+["Yuna Lee",["England","Austria","Cote d'Ivoire","IR Iran"]],
+["Darren Pokoudiby",["Portugal","Norway","Paraguay","New Zealand"]],
+["Giuseppina Rossi",["Spain","Ecuador","Australia","Panama"]]
+];
+
+const TIER_MAP={
+"Spain":"title","France":"title","England":"title","Brazil":"title","Argentina":"title","Portugal":"title","Germany":"title","Netherlands":"title",
+"Belgium":"dark","Japan":"dark","Morocco":"dark","Uruguay":"dark","Croatia":"dark","Switzerland":"dark","Mexico":"dark","USA":"dark","Senegal":"dark","Ecuador":"dark","Austria":"dark","Norway":"dark",
+"Korea Republic":"knockout","Australia":"knockout","Colombia":"knockout","Turkiye":"knockout","Egypt":"knockout","Ghana":"knockout","Scotland":"knockout","Paraguay":"knockout","Czechia":"knockout","Sweden":"knockout","Algeria":"knockout","Bosnia and Herzegovina":"knockout","Cote d'Ivoire":"knockout",
+"Tunisia":"holiday","Canada":"holiday","Jordan":"holiday","Haiti":"holiday","Iraq":"holiday","IR Iran":"holiday","Cabo Verde":"holiday","Qatar":"holiday","New Zealand":"holiday","Curacao":"holiday","Saudi Arabia":"holiday","Panama":"holiday","Congo DR":"holiday","Uzbekistan":"holiday","South Africa":"holiday"
+};
+
+// Eliminated as of 29 June: 16 group stage + South Africa (R32 Jun 28)
+const ELIMINATED=new Set(["Korea Republic","Czechia","Qatar","Scotland","Haiti","Turkiye","Curacao","Tunisia","IR Iran","New Zealand","Uruguay","Saudi Arabia","Iraq","Jordan","Uzbekistan","Panama","South Africa"]);
+
+// Card totals verified against ESPN discipline table 24 June 2026
+// [team, result, goals, yellows, reds, label]
+const MATCHES=[
+["Mexico","win",2,0,1,"Grp A · Jun 11 · vs South Africa 2-0"],
+["South Africa","loss",0,2,2,"Grp A · Jun 11 · vs Mexico 0-2"],
+["Korea Republic","win",2,1,0,"Grp A · Jun 11 · vs Czechia 2-1"],
+["Czechia","loss",1,1,0,"Grp A · Jun 11 · vs Korea 1-2"],
+["Czechia","draw",1,0,0,"Grp A · Jun 18 · vs South Africa 1-1"],
+["South Africa","draw",1,2,0,"Grp A · Jun 18 · vs Czechia 1-1"],
+["Mexico","win",1,1,0,"Grp A · Jun 18 · vs Korea 1-0"],
+["Korea Republic","loss",0,2,0,"Grp A · Jun 18 · vs Mexico 0-1"],
+["Canada","draw",1,2,0,"Grp B · Jun 12 · vs Bosnia 1-1"],
+["Bosnia and Herzegovina","draw",1,3,0,"Grp B · Jun 12 · vs Canada 1-1"],
+["Qatar","draw",1,2,0,"Grp B · Jun 13 · vs Switzerland 1-1"],
+["Switzerland","draw",1,1,0,"Grp B · Jun 13 · vs Qatar 1-1"],
+["Switzerland","win",4,1,0,"Grp B · Jun 18 · vs Bosnia 4-1"],
+["Bosnia and Herzegovina","loss",1,2,1,"Grp B · Jun 18 · vs Switzerland 1-4"],
+["Canada","win",6,1,0,"Grp B · Jun 18 · vs Qatar 6-0"],
+["Qatar","loss",0,1,2,"Grp B · Jun 18 · vs Canada 0-6"],
+["Brazil","draw",1,2,0,"Grp C · Jun 13 · vs Morocco 1-1"],
+["Morocco","draw",1,1,0,"Grp C · Jun 13 · vs Brazil 1-1"],
+["Scotland","win",1,1,0,"Grp C · Jun 13 · vs Haiti 1-0"],
+["Haiti","loss",0,2,0,"Grp C · Jun 13 · vs Scotland 0-1"],
+["Scotland","loss",0,3,0,"Grp C · Jun 19 · vs Morocco 0-1"],
+["Morocco","win",1,0,0,"Grp C · Jun 19 · vs Scotland 1-0"],
+["Brazil","win",3,1,0,"Grp C · Jun 19 · vs Haiti 3-0"],
+["Haiti","loss",0,2,0,"Grp C · Jun 19 · vs Brazil 0-3"],
+["USA","win",4,2,0,"Grp D · Jun 12 · vs Paraguay 4-1"],
+["Paraguay","loss",1,3,1,"Grp D · Jun 12 · vs USA 1-4"],
+["Australia","win",2,2,0,"Grp D · Jun 13 · vs Turkiye 2-0"],
+["Turkiye","loss",0,1,0,"Grp D · Jun 13 · vs Australia 0-2"],
+["USA","win",2,2,0,"Grp D · Jun 19 · vs Australia 2-0"],
+["Australia","loss",0,2,0,"Grp D · Jun 19 · vs USA 0-2"],
+["Turkiye","loss",0,2,0,"Grp D · Jun 20 · vs Paraguay 0-1"],
+["Paraguay","win",1,3,0,"Grp D · Jun 20 · vs Turkiye 1-0"],
+["Germany","win",7,0,0,"Grp E · Jun 14 · vs Curacao 7-1"],
+["Curacao","loss",1,2,0,"Grp E · Jun 14 · vs Germany 1-7"],
+["Cote d'Ivoire","win",1,2,0,"Grp E · Jun 15 · vs Ecuador 1-0"],
+["Ecuador","loss",0,1,0,"Grp E · Jun 15 · vs Cote d'Ivoire 0-1"],
+["Germany","win",2,0,0,"Grp E · Jun 20 · vs Cote d'Ivoire 2-1"],
+["Cote d'Ivoire","loss",1,1,0,"Grp E · Jun 20 · vs Germany 1-2"],
+["Ecuador","draw",0,1,0,"Grp E · Jun 20 · vs Curacao 0-0"],
+["Curacao","draw",0,3,0,"Grp E · Jun 20 · vs Ecuador 0-0"],
+["Netherlands","draw",2,3,0,"Grp F · Jun 14 · vs Japan 2-2"],
+["Japan","draw",2,0,0,"Grp F · Jun 14 · vs Netherlands 2-2"],
+["Sweden","win",5,2,0,"Grp F · Jun 15 · vs Tunisia 5-1"],
+["Tunisia","loss",1,1,0,"Grp F · Jun 15 · vs Sweden 1-5"],
+["Netherlands","win",5,0,0,"Grp F · Jun 20 · vs Sweden 5-1"],
+["Sweden","loss",1,1,0,"Grp F · Jun 20 · vs Netherlands 1-5"],
+["Japan","win",4,0,0,"Grp F · Jun 20 · vs Tunisia 4-0"],
+["Tunisia","loss",0,0,0,"Grp F · Jun 20 · vs Japan 0-4"],
+["Egypt","draw",1,2,0,"Grp G · Jun 15 · vs Belgium 1-1"],
+["Belgium","draw",1,2,0,"Grp G · Jun 15 · vs Egypt 1-1"],
+["IR Iran","draw",2,1,0,"Grp G · Jun 16 · vs New Zealand 2-2"],
+["New Zealand","draw",2,0,0,"Grp G · Jun 16 · vs Iran 2-2"],
+["Spain","draw",0,1,0,"Grp H · Jun 15 · vs Cabo Verde 0-0"],
+["Cabo Verde","draw",0,1,0,"Grp H · Jun 15 · vs Spain 0-0"],
+["Saudi Arabia","draw",1,1,0,"Grp H · Jun 15 · vs Uruguay 1-1"],
+["Uruguay","draw",1,0,0,"Grp H · Jun 15 · vs Saudi Arabia 1-1"],
+["Spain","win",4,0,0,"Grp H · Jun 21 · vs Saudi Arabia 4-0"],
+["Saudi Arabia","loss",0,2,0,"Grp H · Jun 21 · vs Spain 0-4"],
+["Belgium","draw",0,1,1,"Grp G · Jun 21 · vs Iran 0-0"],
+["IR Iran","draw",0,1,0,"Grp G · Jun 21 · vs Belgium 0-0"],
+["Uruguay","draw",2,2,0,"Grp H · Jun 21 · vs Cabo Verde 2-2"],
+["Cabo Verde","draw",2,2,0,"Grp H · Jun 21 · vs Uruguay 2-2"],
+["Egypt","win",3,1,0,"Grp G · Jun 21 · vs New Zealand 3-1"],
+["New Zealand","loss",1,2,0,"Grp G · Jun 21 · vs Egypt 1-3"],
+["France","win",3,0,0,"Grp I · Jun 16 · vs Senegal 3-1"],
+["Senegal","loss",1,0,0,"Grp I · Jun 16 · vs France 1-3"],
+["Norway","win",4,0,0,"Grp I · Jun 16 · vs Iraq 4-1"],
+["Iraq","loss",1,1,0,"Grp I · Jun 16 · vs Norway 1-4"],
+["France","win",3,0,0,"Grp I · Jun 22 · vs Iraq 3-0"],
+["Iraq","loss",0,1,0,"Grp I · Jun 22 · vs France 0-3"],
+["Norway","win",3,0,0,"Grp I · Jun 22 · vs Senegal 3-2"],
+["Senegal","loss",2,0,0,"Grp I · Jun 22 · vs Norway 2-3"],
+["Argentina","win",3,0,0,"Grp J · Jun 16 · vs Algeria 3-0"],
+["Algeria","loss",0,0,0,"Grp J · Jun 16 · vs Argentina 0-3"],
+["Austria","win",3,1,0,"Grp J · Jun 17 · vs Jordan 3-1"],
+["Jordan","loss",1,0,0,"Grp J · Jun 17 · vs Austria 1-3"],
+["Argentina","win",2,2,0,"Grp J · Jun 22 · vs Austria 2-0"],
+["Austria","loss",0,2,0,"Grp J · Jun 22 · vs Argentina 0-2"],
+["Algeria","win",2,1,0,"Grp J · Jun 22 · vs Jordan 3-1"],
+["Jordan","loss",1,1,0,"Grp J · Jun 22 · vs Algeria 1-3"],
+["Portugal","draw",1,3,0,"Grp K · Jun 17 · vs DR Congo 1-1"],
+["Congo DR","draw",1,1,0,"Grp K · Jun 17 · vs Portugal 1-1"],
+["Colombia","win",3,1,0,"Grp K · Jun 17 · vs Uzbekistan 3-1"],
+["Uzbekistan","loss",1,1,0,"Grp K · Jun 17 · vs Colombia 1-3"],
+["Portugal","win",5,1,0,"Grp K · Jun 23 · vs Uzbekistan 5-0"],
+["Uzbekistan","loss",0,1,0,"Grp K · Jun 23 · vs Portugal 0-5"],
+["Colombia","win",1,2,0,"Grp K · Jun 23 · vs DR Congo 1-0"],
+["Congo DR","loss",0,1,0,"Grp K · Jun 23 · vs Colombia 0-1"],
+["England","win",4,0,0,"Grp L · Jun 17 · vs Croatia 4-2"],
+["Croatia","loss",2,0,0,"Grp L · Jun 17 · vs England 2-4"],
+["Ghana","win",1,1,0,"Grp L · Jun 17 · vs Panama 1-0"],
+["Panama","loss",0,2,0,"Grp L · Jun 17 · vs Ghana 0-1"],
+["England","draw",0,1,0,"Grp L · Jun 23 · vs Ghana 0-0"],
+["Ghana","draw",0,1,0,"Grp L · Jun 23 · vs England 0-0"],
+["Croatia","win",1,1,0,"Grp L · Jun 23 · vs Panama 1-0"],
+["Panama","loss",0,1,0,"Grp L · Jun 23 · vs Croatia 0-1"],
+["Algeria","draw",3,0,0,"Grp J · Jun 27 · vs Austria 3-3"],
+["Argentina","win",3,0,0,"Grp J · Jun 27 · vs Jordan 3-1"],
+["Australia","draw",0,1,0,"Grp D · Jun 25 · vs Paraguay 0-0"],
+["Austria","draw",3,1,0,"Grp J · Jun 27 · vs Algeria 3-3"],
+["Belgium","win",5,0,0,"Grp G · Jun 26 · vs New Zealand 5-1"],
+["Bosnia and Herzegovina","win",3,1,0,"Grp B · Jun 24 · vs Qatar 3-1"],
+["Brazil","win",3,2,0,"Grp C · Jun 24 · vs Scotland 3-0"],
+["Cabo Verde","draw",0,1,0,"Grp H · Jun 27 · vs Uruguay 0-0"],
+["Canada","loss",1,2,0,"Grp B · Jun 24 · vs Switzerland 1-2"],
+["Colombia","draw",0,1,0,"Grp K · Jun 27 · vs Portugal 0-0"],
+["Congo DR","win",3,3,0,"Grp K · Jun 27 · vs Uzbekistan 3-1"],
+["Cote d'Ivoire","win",2,1,0,"Grp E · Jun 25 · vs Curacao 2-0"],
+["Croatia","win",2,1,0,"Grp L · Jun 27 · vs Ghana 2-1"],
+["Curacao","loss",0,2,0,"Grp E · Jun 25 · vs Cote d'Ivoire 0-2"],
+["Czechia","loss",0,0,0,"Grp A · Jun 27 · vs Mexico 0-3"],
+["Ecuador","win",2,3,0,"Grp E · Jun 25 · vs Germany 2-1"],
+["Egypt","draw",1,3,0,"Grp G · Jun 26 · vs IR Iran 1-1"],
+["England","win",2,1,0,"Grp L · Jun 27 · vs Panama 2-0"],
+["France","win",4,1,0,"Grp I · Jun 26 · vs Norway 4-1"],
+["Germany","loss",1,1,0,"Grp E · Jun 25 · vs Ecuador 1-2"],
+["Ghana","loss",1,1,0,"Grp L · Jun 27 · vs Croatia 1-2"],
+["Haiti","loss",2,3,0,"Grp C · Jun 24 · vs Morocco 2-4"],
+["IR Iran","draw",1,4,0,"Grp G · Jun 26 · vs Egypt 1-1"],
+["Iraq","loss",0,2,1,"Grp I · Jun 26 · vs Senegal 0-5"],
+["Japan","draw",1,1,0,"Grp F · Jun 26 · vs Sweden 1-1"],
+["Jordan","loss",1,3,0,"Grp J · Jun 27 · vs Argentina 1-3"],
+["Korea Republic","loss",0,1,0,"Grp A · Jun 27 · vs South Africa 0-1"],
+["Mexico","win",3,1,0,"Grp A · Jun 27 · vs Czechia 3-0"],
+["Morocco","win",4,0,0,"Grp C · Jun 24 · vs Haiti 4-2"],
+["Netherlands","win",3,0,0,"Grp F · Jun 26 · vs Tunisia 3-1"],
+["New Zealand","loss",1,2,0,"Grp G · Jun 26 · vs Belgium 1-5"],
+["Norway","loss",1,1,0,"Grp I · Jun 26 · vs France 1-4"],
+["Panama","loss",0,2,0,"Grp L · Jun 27 · vs England 0-2"],
+["Paraguay","draw",0,1,0,"Grp D · Jun 25 · vs Australia 0-0"],
+["Portugal","draw",0,0,0,"Grp K · Jun 27 · vs Colombia 0-0"],
+["Qatar","loss",1,1,0,"Grp B · Jun 24 · vs Bosnia and Herzegovina 1-3"],
+["Saudi Arabia","draw",0,3,0,"Grp H · Jun 27 · vs Spain 0-1"],
+["Scotland","loss",0,1,0,"Grp C · Jun 24 · vs Brazil 0-3"],
+["Senegal","win",5,2,0,"Grp I · Jun 26 · vs Iraq 5-0"],
+["South Africa","win",1,1,0,"Grp A · Jun 27 · vs Korea Republic 1-0"],
+["Spain","win",1,1,0,"Grp H · Jun 27 · vs Saudi Arabia 1-0"],
+["Sweden","draw",1,2,0,"Grp F · Jun 26 · vs Japan 1-1"],
+["Switzerland","win",2,1,0,"Grp B · Jun 24 · vs Canada 2-1"],
+["Tunisia","loss",1,0,0,"Grp F · Jun 26 · vs Netherlands 1-3"],
+["Turkiye","win",3,0,0,"Grp D · Jun 25 · vs USA 3-2"],
+["Uruguay","loss",0,3,1,"Grp H · Jun 27 · vs Cabo Verde 0-0"],
+["USA","loss",2,1,0,"Grp D · Jun 25 · vs Turkiye 2-3"],
+["Uzbekistan","loss",1,2,0,"Grp K · Jun 27 · vs Congo DR 1-3"]
+];
+
+function ptsFor(m){return(m[1]==='win'?10:m[1]==='draw'?5:0)+m[2]*5+m[3]*2+m[4]*5;}
+const teamStats={};
+MATCHES.forEach(m=>{
+  if(!teamStats[m[0]]) teamStats[m[0]]={pts:0,goals:0,conceded:0,yellows:0,reds:0,wins:0,draws:0,losses:0,clean:0,games:0};
+  const s=teamStats[m[0]];
+  s.pts+=ptsFor(m);s.goals+=m[2];s.yellows+=m[3];s.reds+=m[4];s.games++;
+  if(m[1]==='win')s.wins++;else if(m[1]==='draw')s.draws++;else s.losses++;
+});
+const matchByLabel={};
+MATCHES.forEach(m=>{
+  const k=m[5].replace(/vs.*/,'').trim();
+  if(!matchByLabel[k])matchByLabel[k]=[];
+  matchByLabel[k].push(m);
+});
+Object.values(matchByLabel).forEach(pair=>{
+  if(pair.length===2){
+    teamStats[pair[0][0]].conceded+=pair[1][2];
+    teamStats[pair[1][0]].conceded+=pair[0][2];
+    if(pair[1][2]===0)teamStats[pair[0][0]].clean++;
+    if(pair[0][2]===0)teamStats[pair[1][0]].clean++;
+  }
+});
+function tPts(t){return teamStats[t]?teamStats[t].pts:0;}
+
+const leaderboard=PLAYERS.map(([name,teams])=>({name,teams,pts:teams.reduce((s,t)=>s+tPts(t),0)})).sort((a,b)=>b.pts-a.pts);
+
+function renderBoard(filter=""){
+  const f=filter.toLowerCase();
+  const filtered=f?leaderboard.filter(p=>p.name.toLowerCase().includes(f)):leaderboard;
+  const n=leaderboard.length;let html="";
+  filtered.forEach(p=>{
+    const rank=leaderboard.findIndex(x=>x.name===p.name)+1;
+    let rh;
+    if(rank===1)rh=`<div class="medal gold">1</div>`;
+    else if(rank===2)rh=`<div class="medal silver">2</div>`;
+    else if(rank===3)rh=`<div class="medal bronze">3</div>`;
+    else if(rank===n)rh=`<div class="medal last">${n}</div>`;
+    else rh=`<div class="row-rank">${rank}</div>`;
+    const isYou=p.name==="Aaron Campbell";
+    const bd=p.teams.map(t=>{
+      const out=ELIMINATED.has(t);
+      return out?`<span style="color:#E05555;text-decoration:line-through;">${t} ${tPts(t)}</span>`:`${t} ${tPts(t)}`;
+    }).join(' · ');
+    html+=`<div class="row${isYou?' you':''}">
+      ${rh}
+      <div><div class="row-name">${p.name}${isYou?'<span class="you-tag">YOU</span>':''}</div><div class="row-teams">${bd}</div></div>
+      <div><div class="row-pts">${p.pts}</div><div class="row-pts-label">PTS</div></div>
+    </div>`;
+  });
+  document.getElementById('boardList').innerHTML=html||`<p style="color:rgba(245,241,230,0.4);padding:1rem 0;font-size:0.85rem;">No players match.</p>`;
+}
+
+function renderAwards(){
+  const bBy=(fn)=>PLAYERS.map(([n,t])=>({name:n,teams:t,val:fn(t)})).sort((a,b)=>b.val-a.val)[0];
+  const wBy=(fn)=>PLAYERS.map(([n,t])=>({name:n,teams:t,val:fn(t)})).sort((a,b)=>a.val-b.val)[0];
+  const pG=t=>t.reduce((s,x)=>s+(teamStats[x]?teamStats[x].goals:0),0);
+  const pY=t=>t.reduce((s,x)=>s+(teamStats[x]?teamStats[x].yellows:0),0);
+  const pR=t=>t.reduce((s,x)=>s+(teamStats[x]?teamStats[x].reds:0),0);
+  const pC=t=>t.reduce((s,x)=>s+(teamStats[x]?teamStats[x].clean:0),0);
+  const pW=t=>t.reduce((s,x)=>s+(teamStats[x]?teamStats[x].wins:0),0);
+  const pCon=t=>t.reduce((s,x)=>s+(teamStats[x]?teamStats[x].conceded:0),0);
+  const TVAL={title:1,dark:2,knockout:3,holiday:4};
+  const pU=t=>t.reduce((s,x)=>{const tier=TIER_MAP[x]||'holiday';return s+tPts(x)*TVAL[tier];},0);
+  const cr=PLAYERS.map(([n,t])=>{const pts=t.map(x=>tPts(x));return{name:n,gap:Math.max(...pts)-Math.min(...pts),teams:t};}).sort((a,b)=>a.gap-b.gap)[0];
+  const holStar=Object.entries(teamStats).filter(([t])=>(TIER_MAP[t]||'holiday')==='holiday').sort((a,b)=>b[1].pts-a[1].pts)[0];
+  const dkStar=Object.entries(teamStats).filter(([t])=>TIER_MAP[t]==='dark').sort((a,b)=>b[1].pts-a[1].pts)[0];
+  const topGT=Object.entries(teamStats).sort((a,b)=>b[1].goals-a[1].goals)[0];
+  const botGT=Object.entries(teamStats).filter(([,s])=>s.games>0).sort((a,b)=>a[1].goals-b[1].goals)[0];
+  const dirtT=Object.entries(teamStats).sort((a,b)=>(b[1].yellows*2+b[1].reds*5)-(a[1].yellows*2+a[1].reds*5))[0];
+  const cleanT=Object.entries(teamStats).sort((a,b)=>b[1].clean-a[1].clean)[0];
+  const tg=bBy(pG),lg=wBy(pG),ty=bBy(pY),tr=bBy(pR),tc=bBy(pC),tw=bBy(pW),md=bBy(pCon),ld=wBy(pCon),tu=bBy(pU);
+  const awards=[
+    {emoji:"⚽",title:"Most goals scored",winner:tg.name,detail:tg.teams.join(', '),stat:`${tg.val} goals across 4 teams`},
+    {emoji:"🥱",title:"Least goals scored",winner:lg.name,detail:lg.teams.join(', '),stat:`Only ${lg.val} goals — yawn`},
+    {emoji:"🟨",title:"Card magnet",winner:ty.name,detail:ty.teams.join(', '),stat:`${ty.val} yellow cards received`},
+    {emoji:"🟥",title:"Most red cards",winner:tr.name,detail:tr.teams.join(', '),stat:`${tr.val} red card(s)`},
+    {emoji:"🧤",title:"Clean sheet king",winner:tc.name,detail:tc.teams.join(', '),stat:`${tc.val} clean sheets`},
+    {emoji:"🏅",title:"Most wins",winner:tw.name,detail:tw.teams.join(', '),stat:`${tw.val} wins across their teams`},
+    {emoji:"🚿",title:"Defensive nightmare",winner:md.name,detail:md.teams.join(', '),stat:`${md.val} goals conceded`},
+    {emoji:"🛡️",title:"Tightest defence",winner:ld.name,detail:ld.teams.join(', '),stat:`Only ${ld.val} goals let in`},
+    {emoji:"🎯",title:"Best balanced draw",winner:cr.name,detail:cr.teams.join(', '),stat:`Smallest pts gap between 4 teams (${cr.gap} pts)`},
+    {emoji:"🦄",title:"Biggest underdog scorer",winner:tu.name,detail:tu.teams.join(', '),stat:"Best pts weighted by team tier"},
+    {emoji:"🌟",title:"Holiday hero",winner:holStar?holStar[0]:'—',detail:"Best performing bottom-tier team",stat:holStar?`${holStar[1].pts} pts · ${holStar[1].goals} goals`:''},
+    {emoji:"🐎",title:"Dark horse of the tournament",winner:dkStar?dkStar[0]:'—',detail:"Top scoring dark horse team",stat:dkStar?`${dkStar[1].pts} pts · ${dkStar[1].wins} wins`:''},
+    {emoji:"💣",title:"Goal machine (single team)",winner:topGT[0],detail:"Most goals by one team",stat:`${topGT[1].goals} goals in ${topGT[1].games} games`},
+    {emoji:"😴",title:"Most boring team",winner:botGT[0],detail:"Fewest goals scored",stat:`${botGT[1].goals} goals in ${botGT[1].games} games`},
+    {emoji:"😤",title:"Dirtiest team",winner:dirtT[0],detail:"Most card points",stat:`${dirtT[1].yellows}Y ${dirtT[1].reds}R in ${dirtT[1].games} games`},
+    {emoji:"😇",title:"Fairest team",winner:cleanT[0],detail:"Most clean sheets",stat:`${cleanT[1].clean} clean sheets in ${cleanT[1].games} games`},
+  ];
+  document.getElementById('awardsList').innerHTML=awards.map(a=>`<div class="award-card" data-emoji="${a.emoji}"><div class="award-title">${a.emoji} ${a.title}</div><div class="award-winner">${a.winner}</div><div class="award-detail">${a.detail}</div><div class="award-stat">${a.stat}</div></div>`).join('');
+}
+
+function renderLookup(filter=""){
+  const f=filter.toLowerCase();
+  const filtered=f?PLAYERS.filter(([n,t])=>n.toLowerCase().includes(f)||t.some(x=>x.toLowerCase().includes(f))):PLAYERS;
+  let html="";
+  filtered.forEach(([name,teams])=>{
+    const isYou=name==="Aaron Campbell";
+    // Show ALL teams for a given tier (some players have two dark horses etc.)
+    const tierOf=tier=>{
+      const matches=teams.filter(t=>(TIER_MAP[t]||'holiday')===tier);
+      return matches.length?matches.map(t=>{
+        const out=ELIMINATED.has(t);
+        return out
+          ?`<span class="badge" style="background:rgba(220,60,60,0.15);color:#E05555;text-decoration:line-through;">${t}</span>`
+          :`<span class="badge ${tier}">${t}</span>`;
+      }).join(' '):'<span style="color:rgba(245,241,230,0.2);">—</span>';
+    };
+    const pts=teams.reduce((s,t)=>s+tPts(t),0);
+    html+=`<div class="lookup-row"${isYou?' style="background:var(--you-glow);border-radius:6px;"':''}>
+      <span style="font-weight:600;">${name}${isYou?' <span class="you-tag">YOU</span>':''}</span>
+      <span>${tierOf('title')}</span>
+      <span>${tierOf('dark')}</span>
+      <span>${tierOf('knockout')}</span>
+      <span>${tierOf('holiday')}</span>
+      <span class="lookup-pts">${pts}</span>
+    </div>`;
+  });
+  document.getElementById('lookupList').innerHTML=html;
+}
+
+function renderResults(){
+  let html="";
+  [...MATCHES].reverse().forEach(m=>{
+    const pts=ptsFor(m);const rl=m[1]==='win'?'W':m[1]==='draw'?'D':'L';
+    let cards=[];
+    if(m[3]>0)cards.push(`<span class="yc">${m[3]}Y</span>`);
+    if(m[4]>0)cards.push(`<span class="rc">${m[4]}R</span>`);
+    html+=`<div class="match-card"><div><div class="match-teams"><span class="pill ${rl}">${rl}</span>${m[0]}</div><div class="match-meta">${m[5]} · ${m[2]}g${cards.length?' · '+cards.join(' '):''}</div></div><div class="match-pts">${pts}</div></div>`;
+  });
+  document.getElementById('resultsList').innerHTML=html;
+}
+
+function renderStats(){
+  const tg=Object.values(teamStats).reduce((s,t)=>s+t.goals,0)/2;
+  const tms=Object.values(teamStats).reduce((s,t)=>s+t.games,0)/2;
+  document.getElementById('statMatches').textContent=Math.round(tms);
+  document.getElementById('statGoals').textContent=Math.round(tg);
+  document.getElementById('statLeader').textContent=leaderboard[0].name.split(' ')[0];
+}
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+document.getElementById('searchBoard').addEventListener('input',e=>renderBoard(e.target.value));
+document.getElementById('searchLookup').addEventListener('input',e=>renderLookup(e.target.value));
+renderBoard();renderAwards();renderLookup();renderResults();renderStats();
+</script>
+</body>
+</html>
