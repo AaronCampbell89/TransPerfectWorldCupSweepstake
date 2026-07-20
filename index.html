@@ -79,7 +79,7 @@
   <div class="kicker">TransPerfect · World Cup 2026 · Office Sweepstake</div>
   <h1>TransPerfect<br><span class="accent">World Cup Sweepstake</span></h1>
   <p class="sub">10pts a win · 5pts a draw · 5pts per goal · 2pts per yellow · 5pts per red card. 66 players, four teams each. 1st: £150 · 2nd: £85 · 3rd: £45 · Last: £45</p>
-  <div class="status"><span class="dot"></span><span>Updated 12 July · Semi-finals: Argentina, England, Spain, France · 44 eliminated</span></div>
+  <div class="status"><span class="dot"></span><span>🏆 TOURNAMENT COMPLETE · Spain are World Champions · Final standings below</span></div>
 </header>
 <div class="stats">
   <div class="stat"><div class="stat-num">66</div><div class="stat-label">Players</div></div>
@@ -190,8 +190,8 @@ const TIER_MAP={
 "Tunisia":"holiday","Canada":"holiday","Jordan":"holiday","Haiti":"holiday","Iraq":"holiday","IR Iran":"holiday","Cabo Verde":"holiday","Qatar":"holiday","New Zealand":"holiday","Curacao":"holiday","Saudi Arabia":"holiday","Panama":"holiday","Congo DR":"holiday","Uzbekistan":"holiday","South Africa":"holiday"
 };
 
-// Eliminated as of 11 July: 16 group + 16 R32 + 8 R16 + 4 QF. Semi-finalists: Argentina, England, Spain, France
-const ELIMINATED=new Set(["Korea Republic","Czechia","Qatar","Scotland","Haiti","Turkiye","Curacao","Tunisia","IR Iran","New Zealand","Uruguay","Saudi Arabia","Iraq","Jordan","Uzbekistan","Panama","South Africa","Japan","Germany","Netherlands","Sweden","Ecuador","Cote d'Ivoire","Congo DR","Senegal","Bosnia and Herzegovina","Algeria","Croatia","Austria","Australia","Cabo Verde","Ghana","Canada","Paraguay","Mexico","Brazil","Portugal","Colombia","Egypt","USA","Switzerland","Norway","Belgium","Morocco"]);
+// Eliminated: 16 group + 16 R32 + 8 R16 + 4 QF + 1 SF (France). Final: Spain vs winner of Argentina/England
+const ELIMINATED=new Set(["Korea Republic","Czechia","Qatar","Scotland","Haiti","Turkiye","Curacao","Tunisia","IR Iran","New Zealand","Uruguay","Saudi Arabia","Iraq","Jordan","Uzbekistan","Panama","South Africa","Japan","Germany","Netherlands","Sweden","Ecuador","Cote d'Ivoire","Congo DR","Senegal","Bosnia and Herzegovina","Algeria","Croatia","Austria","Australia","Cabo Verde","Ghana","Canada","Paraguay","Mexico","Brazil","Portugal","Colombia","Egypt","USA","Switzerland","Norway","Belgium","Morocco","France","England","Argentina","Spain"]);
 
 // Card totals verified against ESPN discipline table 24 June 2026
 // [team, result, goals, yellows, reds, label]
@@ -395,7 +395,15 @@ const MATCHES=[
 ["Spain","win",2,2,0,"QF · Jul 11 · vs Belgium 2-1"],
 ["Belgium","loss",1,2,0,"QF · Jul 11 · vs Spain 1-2"],
 ["France","win",2,0,0,"QF · Jul 11 · vs Morocco 2-0"],
-["Morocco","loss",0,1,0,"QF · Jul 11 · vs France 0-2"]
+["Morocco","loss",0,1,0,"QF · Jul 11 · vs France 0-2"],
+["France","loss",0,2,0,"SF · Jul 14 · vs Spain 0-2"],
+["Spain","win",2,1,0,"SF · Jul 14 · vs France 2-0"],
+["England","loss",1,1,0,"SF · Jul 15 · vs Argentina 1-2"],
+["Argentina","win",2,3,0,"SF · Jul 15 · vs England 2-1"],
+["France","loss",4,0,0,"3rd · Jul 18 · vs England 4-6"],
+["England","win",6,0,0,"3rd · Jul 18 · vs France 4-6"],
+["Spain","win",1,0,0,"Final · Jul 20 · vs Argentina 1-0 (AET)"],
+["Argentina","loss",0,5,1,"Final · Jul 20 · vs Spain 0-1 (AET)"]
 ];
 
 function ptsFor(m){return(m[1]==='win'?10:m[1]==='draw'?5:0)+m[2]*5+m[3]*2+m[4]*5;}
