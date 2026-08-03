@@ -171,6 +171,21 @@
     box-shadow:none;
   }
   .card-back:hover{transform:none;}
+  .card-exhaust{
+    background:var(--sprinteur-2);
+    color:var(--chalk);
+    box-shadow:0 2px 0 rgba(0,0,0,0.35), inset 0 0 0 2px rgba(0,0,0,0.2);
+  }
+  .ex-text{color:var(--sprinteur-2);}
+  .legend-note{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11px;color:var(--chalk-dim);
+    align-self:center;margin-left:2px;
+  }
+  .legend-swatch{
+    width:11px;height:11px;border-radius:3px;
+    background:var(--sprinteur-2);display:inline-block;
+  }
   .empty-hint{color:var(--chalk-dim);font-size:13px;align-self:center;}
 
   .rider-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
@@ -267,7 +282,7 @@
       name: name,
       type: type,
       exhaustionValue: exhaustion,
-      deck: shuffle(cards),
+      deck: shuffle(cards.map(function(v){ return {v:v, ex:false}; })),
       discard: [],
       hand: [],
       history: [],
@@ -304,7 +319,7 @@
     var played = rider.hand.splice(handIdx,1)[0];
     rider.history.unshift(played);
     if(rider.history.length > 8) rider.history.length = 8;
-    rider.totalDistance += played;
+    rider.totalDistance += played.v;
     rider.discard = rider.discard.concat(rider.hand);
     rider.hand = [];
     dealHand(rider);
@@ -313,7 +328,7 @@
   }
 
   function addExhaustion(rider){
-    rider.discard.push(rider.exhaustionValue);
+    rider.discard.push({v: rider.exhaustionValue, ex:true});
     render();
   }
 
@@ -326,7 +341,7 @@
   function resetRace(){
     riders.forEach(function(r){
       var base = r.type === 'custom' ? r._customCards : DECKS[r.type].cards;
-      r.deck = shuffle(base);
+      r.deck = shuffle(base.map(function(v){ return {v:v, ex:false}; }));
       r.discard = [];
       r.hand = [];
       r.history = [];
@@ -364,13 +379,14 @@
       });
     } else {
       r.hand.forEach(function(card, i){
-        handHtml += '<button class="card-btn" data-action="play" data-id="'+r.id+'" data-idx="'+i+'" aria-label="Play '+card+'">'+card+'</button>';
+        var cls = 'card-btn' + (card.ex ? ' card-exhaust' : '');
+        handHtml += '<button class="'+cls+'" data-action="play" data-id="'+r.id+'" data-idx="'+i+'" aria-label="Play '+card.v+(card.ex ? ' (exhaustion)' : '')+'">'+card.v+'</button>';
       });
     }
     var revealLabel = r.hand.length === 0 ? '' : (r.revealed ? 'Hide hand' : 'Show hand');
 
     var historyHtml = r.history.length
-      ? 'Recent: ' + r.history.map(function(c){ return '<b>'+c+'</b>'; }).join(', ')
+      ? 'Recent: ' + r.history.map(function(c){ return c.ex ? '<b class="ex-text">'+c.v+'</b>' : '<b>'+c.v+'</b>'; }).join(', ')
       : 'Recent: —';
 
     return (
@@ -395,6 +411,7 @@
           '<div class="rider-actions">' +
             (revealLabel ? '<button class="btn btn-primary btn-small" data-action="reveal" data-id="'+r.id+'">'+revealLabel+'</button>' : '') +
             '<button class="btn btn-ghost btn-small" data-action="exhaust" data-id="'+r.id+'">Add exhaustion ('+r.exhaustionValue+')</button>' +
+            '<span class="legend-note"><span class="legend-swatch"></span>exhaustion card</span>' +
           '</div>' +
           '<div class="history">'+historyHtml+'</div>' +
         '</div>' +
