@@ -163,6 +163,14 @@
   .card-btn:hover{transform:translateY(-3px);}
   .card-btn:active{transform:translateY(0);}
   .card-btn:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;}
+  .card-back{
+    background:repeating-linear-gradient(45deg, var(--asphalt), var(--asphalt) 6px, var(--asphalt-2) 6px, var(--asphalt-2) 12px);
+    color:var(--chalk-dim);
+    border:1px solid var(--line);
+    cursor:default;
+    box-shadow:none;
+  }
+  .card-back:hover{transform:none;}
   .empty-hint{color:var(--chalk-dim);font-size:13px;align-self:center;}
 
   .rider-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
@@ -193,7 +201,7 @@
   <header>
     <p class="eyebrow">Peloton Utility</p>
     <h1>Flamme Rouge — Deck Runner</h1>
-    <p class="sub">Hands itself, discards itself, only reshuffles when the pack actually runs out. Add exhaustion cards on the fly — they wait in the discard pile and rejoin on the next shuffle, so play never stalls late-race.</p>
+    <p class="sub">Hands itself, discards itself, only reshuffles when the pack actually runs out. Hands stay face-down by default — tap "Show hand" to peek at your own cards; revealing one rider automatically hides everyone else's, so only one hand is ever visible at a time.</p>
   </header>
 
   <div class="panel">
@@ -265,8 +273,14 @@
       history: [],
       totalDistance: 0,
       reshuffles: 0,
-      justReshuffled: false
+      justReshuffled: false,
+      revealed: false
     };
+  }
+
+  function revealRider(id){
+    riders.forEach(function(r){ r.revealed = (r.id === id) ? !r.revealed : false; });
+    render();
   }
 
   function dealHand(rider){
@@ -294,6 +308,7 @@
     rider.discard = rider.discard.concat(rider.hand);
     rider.hand = [];
     dealHand(rider);
+    rider.revealed = false;
     render();
   }
 
@@ -317,6 +332,7 @@
       r.history = [];
       r.totalDistance = 0;
       r.reshuffles = 0;
+      r.revealed = false;
       dealHand(r);
     });
     render();
@@ -342,11 +358,16 @@
     var handHtml = '';
     if(r.hand.length === 0){
       handHtml = '<div class="empty-hint">No cards left anywhere — add an exhaustion card or reset the race.</div>';
+    } else if(!r.revealed){
+      r.hand.forEach(function(){
+        handHtml += '<div class="card-btn card-back" aria-hidden="true">?</div>';
+      });
     } else {
       r.hand.forEach(function(card, i){
         handHtml += '<button class="card-btn" data-action="play" data-id="'+r.id+'" data-idx="'+i+'" aria-label="Play '+card+'">'+card+'</button>';
       });
     }
+    var revealLabel = r.hand.length === 0 ? '' : (r.revealed ? 'Hide hand' : 'Show hand');
 
     var historyHtml = r.history.length
       ? 'Recent: ' + r.history.map(function(c){ return '<b>'+c+'</b>'; }).join(', ')
@@ -369,9 +390,10 @@
             '<div class="stat"><span class="stat-num">'+r.totalDistance+'</span><span class="stat-label">Distance</span></div>' +
             '<div class="stat"><span class="stat-num">'+r.reshuffles+'</span><span class="stat-label">Reshuffles</span></div>' +
           '</div>' +
-          '<p class="section-label">Hand — tap the card played'+(r.justReshuffled ? '<span class="reshuffle-flag">Just reshuffled</span>' : '')+'</p>' +
+          '<p class="section-label">Hand'+(r.revealed ? ' — tap the card played' : ' — hidden from the table')+(r.justReshuffled ? '<span class="reshuffle-flag">Just reshuffled</span>' : '')+'</p>' +
           '<div class="hand">'+handHtml+'</div>' +
           '<div class="rider-actions">' +
+            (revealLabel ? '<button class="btn btn-primary btn-small" data-action="reveal" data-id="'+r.id+'">'+revealLabel+'</button>' : '') +
             '<button class="btn btn-ghost btn-small" data-action="exhaust" data-id="'+r.id+'">Add exhaustion ('+r.exhaustionValue+')</button>' +
           '</div>' +
           '<div class="history">'+historyHtml+'</div>' +
@@ -456,6 +478,8 @@
       addExhaustion(rider);
     } else if(action === 'remove'){
       removeRider(id);
+    } else if(action === 'reveal'){
+      revealRider(id);
     }
   });
 
